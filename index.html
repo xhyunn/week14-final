@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오감교차 교실 (Cross-Sense Classroom)</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- D3.js v7 -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Intro Section -->
+    <section id="intro">
+        <canvas id="introCanvas"></canvas>
+        <div class="intro-content">
+            <div class="intro-header">
+                <span>Cross-Sense Classroom</span>
+                <span>No. 2222</span>
+            </div>
+
+            <div class="main-text-area">
+                <p class="main-text">일상의 장면에는<br>시각·청각·촉각·후각·미각이<br>서로 다른 비율로 섞여 있습니다.</p>
+            </div>
+
+            <div class="sub-content-grid">
+                <div class="description-col">
+                    <p class="sub-text">오감교차 교실은 사람들이 경험을 어떻게 구성하는지를 오감 데이터로 시각화하는 인터랙티브 맵입니다.</p>
+                    <p class="sub-text">수백 개의 감각 점들이 하나의 구름처럼 모여 당신의 감각 패턴과 다른 사람들의 감각 패턴을 한눈에 비교할 수 있습니다.</p>
+                </div>
+
+                <div class="action-col">
+                    <button id="exploreBtn" class="enter-btn">
+                        <span class="btn-text">입장하기</span>
+                        <span class="btn-sub">Enter Archive</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Container -->
+    <div id="mapContainer">
+        <svg id="map"></svg>
+
+        <!-- Filter Bar -->
+        <div id="filterBar" class="filter-bar">
+            <div class="filter-title">Senses</div>
+            <button class="filter-btn active" data-sense="sight" style="--btn-color: #E8C547">Sight</button>
+            <button class="filter-btn active" data-sense="sound" style="--btn-color: #5A7EBF">Sound</button>
+            <button class="filter-btn active" data-sense="touch" style="--btn-color: #D86C5B">Touch</button>
+            <button class="filter-btn active" data-sense="smell" style="--btn-color: #7BA77B">Smell</button>
+            <button class="filter-btn active" data-sense="taste" style="--btn-color: #B58CB5">Taste</button>
+        </div>
+
+        <!-- Map Controls -->
+        <div class="map-controls">
+            <button id="zoomIn" title="Zoom In">+</button>
+            <button id="zoomOut" title="Zoom Out">-</button>
+            <button id="resetView" title="Reset View">⟲</button>
+        </div>
+
+        <!-- Menu Button -->
+        <button id="menuBtn" class="menu-btn">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </button>
+
+        <!-- Info Modal -->
+        <div id="infoModal" class="info-modal hidden">
+            <button id="closeModal" class="close-modal-btn">×</button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span>Project Info</span>
+                    <span>오감교차교실</span>
+                </div>
+                <div class="modal-body">
+                    <div class="info-section">
+                        <h3>About</h3>
+                        <p>오감교차 교실은 사람들이 경험을 어떻게 구성하는지를 오감 데이터로 시각화하는 인터랙티브 맵입니다. 수백 개의 감각 점들이 하나의 구름처럼 모여 당신의 감각 패턴과 다른
+                            사람들의 감각 패턴을 한눈에 비교할 수 있습니다.</p>
+                        <p class="en">Cross-Sense Classroom is an interactive map that visualizes how people construct
+                            their experiences using sensory data. Hundreds of sensory points gather like a cloud,
+                            allowing you to compare your sensory patterns with others at a glance.</p>
+                    </div>
+                    <div class="credits-section">
+                        <h3>Credits</h3>
+                        <div class="credit-item">
+                            <span class="role">Director</span>
+                            <span class="name">Hyun N.</span>
+                        </div>
+                        <div class="credit-item">
+                            <span class="role">Development</span>
+                            <span class="name">Antigravity</span>
+                        </div>
+                        <div class="credit-item">
+                            <span class="role">Design</span>
+                            <span class="name">Google DeepMind</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Polaroid Tooltip (Hidden by default) -->
+        <div id="polaroid" class="polaroid hidden">
+            <div class="polaroid-inner">
+                <div class="polaroid-front">
+                    <div class="polaroid-image"></div>
+                    <div class="polaroid-caption">Scene #<span id="sceneId"></span></div>
+                </div>
+                <div class="polaroid-back">
+                    <div class="polaroid-back-content">
+                        <h4>Sense Mix</h4>
+                        <div id="polaroid-stats"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side Panel (Hidden by default) -->
+    <aside id="sidePanel" class="hidden">
+        <button id="closePanel">×</button>
+        <div class="panel-content">
+            <div id="panelImage" class="panel-image"></div>
+            <h2 id="panelTitle">Scene Detail</h2>
+            <div class="sense-bars">
+                <!-- Bars will be populated by JS -->
+            </div>
+            <p id="panelDescription">이 장면은 시각적 요소가 강하게 느껴지는 순간입니다.</p>
+        </div>
+    </aside>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
